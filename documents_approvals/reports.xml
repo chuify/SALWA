@@ -1,0 +1,27 @@
+<odoo>
+    <data>
+
+        <template id="report_saleorder_document" inherit_id="sale.report_saleorder_document">
+
+            <xpath expr="//div[hasclass('oe_structure')]" postion="before">
+                <div t-if="doc.sales_manager_approval" class="mt32 ml16 mr16" name="signature">
+                    <div class="offset-8">
+                        <strong>Approval from Sales Manager</strong>
+                    </div>
+                    <div t-if="doc.sales_manager_approval.approval_signature" class="offset-8">
+                        <img t-att-src="image_data_uri(doc.sales_manager_approval.approval_signature)" style="max-height: 4cm; max-width: 8cm;"/>
+                    </div>
+                </div>
+                <div t-if="doc.finance_manager_approval" class="mt32 ml16 mr16" name="signature">
+                    <div class="offset-8">
+                        <strong>Approval from Finance Manager</strong>
+                    </div>
+                    <div t-if="doc.finance_manager_approval.approval_signature" class="offset-8">
+                        <img t-att-src="image_data_uri(doc.finance_manager_approval.approval_signature)" style="max-height: 4cm; max-width: 8cm;"/>
+                    </div>
+                </div>
+            </xpath>
+        </template>
+
+    </data>
+</odoo>

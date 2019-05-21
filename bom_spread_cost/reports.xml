@@ -1,0 +1,50 @@
+<odoo>
+
+    <data>
+
+        <record id="report_mrp_bom" model="ir.ui.view">
+            <field name="name">report.mrp.bom</field>
+            <field name="inherit_id" ref="mrp.report_mrp_bom"/>
+            <field name="arch" type="xml">
+                <xpath expr="//thead/tr" postion="inside">
+                    <th class="o_mrp_unit_cost">Unit Cost</th>
+                </xpath>
+                <xpath expr="//tbody/tr" postion="inside">
+                    <td class="o_mrp_unit_cost">
+                        <span><t t-esc="data['unit_cost']" t-options='{"widget": "monetary", "display_currency": currency}'/></span>
+                    </td>
+                </xpath>
+
+                <xpath expr="//tbody/tr" postion="after">
+                    <!--<xpath expr="//t[@t-call='mrp.report_mrp_bom_pdf_line']" postion="after">-->
+                    <tr>
+                        <td>
+                            <span><a href="#" t-if="data['report_type'] == 'html'" t-att-data-res-id="data['product_byproduct'].id" t-att-data-model="'product.product'" class="o_mrp_bom_action"><t t-esc="data['bom_prod_name_byproduct']"/></a><t t-else="" t-esc="data['bom_prod_name_byproduct']"/></span>
+                        </td>
+                        <td>
+                            <span><a href="#" t-if="data['report_type'] == 'html'" t-att-data-res-id="data['bom'].id" t-att-data-model="'mrp.bom'" class="o_mrp_bom_action"><t t-esc="data['code']"/></a><t t-else="" t-esc="data['code']"/></span>
+                        </td>
+                        <td class="text-right"><span><t t-esc="data['bom_qty']" t-options='{"widget": "float", "decimal_precision": "Product Unit of Measure"}'/></span></td>
+                        <td groups="uom.group_uom"><span><t t-esc="data['bom'].product_uom_id.name"/></span></td>
+                        <td t-if="data['report_structure'] != 'bom_cost'" class="o_mrp_prod_cost text-right">
+                            <span><t t-esc="data['price_byproduct']" t-options='{"widget": "monetary", "display_currency": currency}'/></span>
+                        </td>
+                        <td t-if="data['report_structure'] != 'bom_structure'" class="o_mrp_bom_cost text-right">
+                            <span><t t-esc="data['total']" t-options='{"widget": "monetary", "display_currency": currency}'/></span>
+                        </td>
+                        <td t-if="data['report_type'] == 'html'">
+                            <span>
+                                <t t-if="data['attachments']">
+                                    <a href="#" role="button" t-att-data-res-id="data['attachments'].ids" t-att-data-model="'mrp.document'" class="o_mrp_show_attachment_action fa fa-fw o_button_icon fa-files-o"/>
+                                </t>
+                            </span>
+                        </td>
+                    </tr>
+                </xpath>
+            </field>
+        </record>
+
+
+    </data>
+
+</odoo>
